@@ -1,0 +1,67 @@
+// Pseudocode
+
+// Initialize public variables and collections
+string name; // Name of characer
+int level; // Character's level
+list class: // Character's class
+    Artificer,
+    Barbarian,
+    Bard,
+    Cleric,
+    Druid,
+    Fighter,
+    Monk,
+    Ranger,
+    Rogue,
+    Paladin,
+    Sorcerer,
+    Wizard,
+    Warlock;
+dictionary dSize: // Size of hit dice for each class
+    Artificer = 8,
+    Barbarian = 12,
+    Bard = 8,
+    Cleric = 8,
+    Druid = 8,
+    Fighter = 10,
+    Monk = 8,
+    Ranger = 10,
+    Rogue = 8,
+    Paladin = 10,
+    Sorcerer = 6,
+    Wizard = 6,
+    Warlock = 8;
+int conScore; // Character's constitution
+int[30] conMod: {-5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10} // HP modifier based on CON score
+bool isDwarf; // If character's species is hill dwarf
+bool hasTough; // If character has trait Tough
+bool isAveraged; // true = calculate average HP for build, false = roll random dice values
+
+// Initialize private variables
+private hp
+
+// Begin script
+void start:
+
+// Add HP per level
+    for (i = 1, i <= level): // Repeat calculation for each character level
+        hp += AddPoints(dSize[class], isAveraged) + conMod[conScore - 1]; // call method AddPoints
+        if isDwarf is true: // if character is dwarf, add 1 additional hit point
+            hp += 1;
+        if hasTough is true: // if character is tough, add 2 additional hit points
+            hp += 2;
+
+// Output
+debug_log: My character "%string:name%" is a level %int:level% %list:class% with a CON score of %int[]:conScore% and %bool:isDwarf ? "is" : "is not"% a Hill Dwarf and %bool:hasTough ? "has" : "has not"% Tough feat. I want the HP %bool:isAveraged ? "averaged" : "rolled"%;
+debug_log: HP = %int:hp%;
+
+// Methods
+int AddPoints(dictionary sides, bool avg):
+    if avg is true:
+        int sum; // internal variable
+        for (i = 1, i <= sides):
+            sum += i; // sums all sides together
+        mean = sum / sides // divide sum by # of sides to get mean average
+        return mean; // return to addition call
+    else:
+        return random range 1 through sides; // adds random number between 1 and # of die faces
